@@ -6,6 +6,9 @@
 #define SPI_PORT spi0
 #define PIN_CS 14
 
+#define HB 25
+
+
 void writeDAC(int channel, float v);
 
 
@@ -39,19 +42,23 @@ void writeDAC(int channel, float v)
 
 int main()
 {
-    spi_init(SPI_PORT, 20000 * 1000); // the baud, or bits per second
+
+    gpio_init(HB);
+    gpio_set_dir(HB, GPIO_OUT);
+    gpio_put(HB, 0);
+    gpio_init(PIN_CS);
+    gpio_set_dir(PIN_CS, GPIO_OUT);
+    gpio_put(PIN_CS, 1);
+
+    spi_init(SPI_PORT, 1000000); // the baud, or bits per second
     gpio_set_function(PICO_DEFAULT_SPI_RX_PIN, GPIO_FUNC_SPI);
     gpio_set_function(PICO_DEFAULT_SPI_SCK_PIN, GPIO_FUNC_SPI);
     gpio_set_function(PICO_DEFAULT_SPI_TX_PIN, GPIO_FUNC_SPI);
     stdio_init_all();
 
-    cs_select(PIN_CS);
-    spi_write_blocking(SPI_PORT, data, 2); // where data is a uint8_t array with length len
-    cs_deselect(PIN_CS);
+
     
-    gpio_init(PIN_CS);
-    gpio_set_dir(PIN_CS, GPIO_OUT);
-    gpio_put(PIN_CS, 1);
+
 
     float t = 0.0;
 
@@ -60,7 +67,7 @@ int main()
     {
         // call writeDAC
         float voltage = (sinf(2*M_PI*2.0 * 1.0*t) +1.0)/2.0*3.3;
-        writeDAC(0, (uint16_t)(voltage / 3.3 * 1023));
+        writeDAC(0, (voltage));
 
         float tri_phase = fmodf(t, 1.0);
         float tri_v;
@@ -71,8 +78,11 @@ int main()
         {
         tri_v = (1.0 - tri_phase) * 2.0 * 3.3;
         }
-        writeDAC(1, (uint16_t)(tri_v / 3.3 * 1023));
+        writeDAC(1, tri_v);
         t = t+0.01;
+
+        bool heartbeat = gpio_get(HB);
+        gpio_put(HB, !heartbeat);
         sleep_ms(10);        
     }
 }
