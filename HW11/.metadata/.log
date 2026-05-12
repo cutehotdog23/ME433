@@ -1,0 +1,19 @@
+!SESSION 2026-05-12 12:57:35.412 -----------------------------------------------
+eclipse.buildId=Version 2.1.1
+java.version=21.0.9
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=macosx, ARCH=aarch64, WS=cocoa, NL=en_US
+Framework arguments:  -keyring /Users/mileslankford/.eclipse_keyring
+Command-line arguments:  -os macosx -ws cocoa -arch aarch64 -keyring /Users/mileslankford/.eclipse_keyring
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2026-05-12 12:58:02.601
+!MESSAGE Log4j2 initialized with config file /Users/mileslankford/Desktop/ME433/HW11/.metadata/.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2026-05-12 12:58:05.097
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2026-05-12 12:58:07.546
+!MESSAGE ProjectImporter: already registered
+
+!ENTRY org.eclipse.cdt.core 1 0 2026-05-12 12:58:51.542
+!MESSAGE Indexed 'HW11Proj' (23 sources, 122 headers) in 0.966 sec: 10,639 declarations; 39,565 references; 1 unresolved inclusions; 66 syntax errors; 240 unresolved names (0.48%)
